@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Top 100 Mobile Processor Rankings</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#0f172a;
+color:white;
+margin:0;
+padding:40px;
+text-align:center;
+}
+
+h1{
+font-size:36px;
+margin-bottom:20px;
+}
+
+.search-box{
+display:flex;
+justify-content:center;
+margin-bottom:30px;
+}
+
+#search{
+width:500px;
+padding:15px;
+font-size:18px;
+border-radius:10px;
+border:none;
+outline:none;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#1e293b;
+margin-top:20px;
+}
+
+th,td{
+padding:14px;
+text-align:left;
+border-bottom:1px solid #334155;
+}
+
+th{
+background:#2563eb;
+font-size:18px;
+}
+
+tr:hover{
+background:#334155;
+}
+
+</style>
+</head>
+<body>
+
+<h1>📱 Top 100 Mobile Processor Rankings</h1>
+
+<input type="text" id="search" placeholder="Search processor...">
+
+<table>
+
+<thead>
+<tr>
+<th>Rank</th>
+<th>Processor</th>
+<th>Company</th>
+<th>CPU Score</th>
+<th>GPU Score</th>
+<th>AnTuTu Score</th>
+<th>Process</th>
+</tr>
+</thead>
+
+<tbody id="cpuTable"></tbody>
+
+</table>
+
+<script>
+
+const processors = [
+
+{rank:1,name:"Apple A19 Pro",company:"Apple",cpu:980000,gpu:910000,antutu:1890000,process:"3nm"},
+{rank:2,name:"Snapdragon 8 Elite",company:"Qualcomm",cpu:920000,gpu:880000,antutu:1810000,process:"3nm"},
+{rank:3,name:"Dimensity 9500",company:"MediaTek",cpu:910000,gpu:860000,antutu:1780000,process:"3nm"},
+{rank:4,name:"Dimensity 9400+",company:"MediaTek",cpu:890000,gpu:830000,antutu:1710000,process:"3nm"},
+{rank:5,name:"Snapdragon 8 Gen 3",company:"Qualcomm",cpu:820000,gpu:800000,antutu:1600000,process:"4nm"},
+{rank:6,name:"Apple A18 Pro",company:"Apple",cpu:810000,gpu:790000,antutu:1580000,process:"3nm"},
+{rank:7,name:"Dimensity 9300+",company:"MediaTek",cpu:790000,gpu:760000,antutu:1540000,process:"4nm"},
+{rank:8,name:"Dimensity 9300",company:"MediaTek",cpu:770000,gpu:740000,antutu:1500000,process:"4nm"},
+{rank:9,name:"Snapdragon 8 Gen 2",company:"Qualcomm",cpu:710000,gpu:700000,antutu:1380000,process:"4nm"},
+{rank:10,name:"Apple A17 Pro",company:"Apple",cpu:700000,gpu:690000,antutu:1360000,process:"3nm"},
+
+{rank:11,name:"Apple A16 Bionic",company:"Apple",cpu:650000,gpu:640000,antutu:1280000,process:"4nm"},
+{rank:12,name:"Exynos 2400",company:"Samsung",cpu:630000,gpu:620000,antutu:1240000,process:"4nm"},
+{rank:13,name:"Snapdragon 8s Gen 3",company:"Qualcomm",cpu:620000,gpu:610000,antutu:1220000,process:"4nm"},
+{rank:14,name:"Dimensity 9200+",company:"MediaTek",cpu:600000,gpu:590000,antutu:1180000,process:"4nm"},
+{rank:15,name:"Snapdragon 8 Gen 1",company:"Qualcomm",cpu:560000,gpu:540000,antutu:1080000,process:"4nm"},
+{rank:16,name:"Dimensity 9200",company:"MediaTek",cpu:550000,gpu:530000,antutu:1060000,process:"4nm"},
+{rank:17,name:"Snapdragon 888+",company:"Qualcomm",cpu:520000,gpu:510000,antutu:1000000,process:"5nm"},
+{rank:18,name:"Snapdragon 888",company:"Qualcomm",cpu:500000,gpu:490000,antutu:980000,process:"5nm"},
+{rank:19,name:"Apple A15 Bionic",company:"Apple",cpu:480000,gpu:470000,antutu:950000,process:"5nm"},
+{rank:20,name:"Exynos 2200",company:"Samsung",cpu:460000,gpu:450000,antutu:920000,process:"4nm"},
+
+{rank:21,name:"Google Tensor G3",company:"Google",cpu:440000,gpu:430000,antutu:900000,process:"4nm"},
+{rank:22,name:"Snapdragon 870",company:"Qualcomm",cpu:430000,gpu:420000,antutu:860000,process:"7nm"},
+{rank:23,name:"Dimensity 8200",company:"MediaTek",cpu:420000,gpu:410000,antutu:840000,process:"4nm"},
+{rank:24,name:"Dimensity 8100",company:"MediaTek",cpu:410000,gpu:400000,antutu:820000,process:"5nm"},
+{rank:25,name:"Google Tensor G2",company:"Google",cpu:400000,gpu:390000,antutu:800000,process:"5nm"},
+{rank:26,name:"Snapdragon 865+",company:"Qualcomm",cpu:390000,gpu:380000,antutu:780000,process:"7nm"},
+{rank:27,name:"Snapdragon 865",company:"Qualcomm",cpu:380000,gpu:370000,antutu:760000,process:"7nm"},
+{rank:28,name:"Apple A14 Bionic",company:"Apple",cpu:370000,gpu:360000,antutu:740000,process:"5nm"},
+{rank:29,name:"Exynos 2100",company:"Samsung",cpu:360000,gpu:350000,antutu:720000,process:"5nm"},
+{rank:30,name:"Snapdragon 860",company:"Qualcomm",cpu:350000,gpu:340000,antutu:700000,process:"7nm"},
+
+{rank:31,name:"Snapdragon 855+",company:"Qualcomm",cpu:340000,gpu:330000,antutu:680000,process:"7nm"},
+{rank:32,name:"Snapdragon 855",company:"Qualcomm",cpu:330000,gpu:320000,antutu:660000,process:"7nm"},
+{rank:33,name:"Dimensity 1200",company:"MediaTek",cpu:320000,gpu:310000,antutu:640000,process:"6nm"},
+{rank:34,name:"Dimensity 1100",company:"MediaTek",cpu:310000,gpu:300000,antutu:620000,process:"6nm"},
+{rank:35,name:"Kirin 9000",company:"Huawei",cpu:300000,gpu:290000,antutu:600000,process:"5nm"},
+
+{rank:36,name:"Snapdragon 7+ Gen 3",company:"Qualcomm",cpu:290000,gpu:280000,antutu:580000,process:"4nm"},
+{rank:37,name:"Snapdragon 7 Gen 3",company:"Qualcomm",cpu:280000,gpu:270000,antutu:560000,process:"4nm"},
+{rank:38,name:"Dimensity 8300 Ultra",company:"MediaTek",cpu:270000,gpu:260000,antutu:540000,process:"4nm"},
+{rank:39,name:"Snapdragon 778G",company:"Qualcomm",cpu:260000,gpu:250000,antutu:520000,process:"6nm"},
+{rank:40,name:"Snapdragon 780G",company:"Qualcomm",cpu:250000,gpu:240000,antutu:500000,process:"5nm"},
+
+{rank:41,name:"Dimensity 7200",company:"MediaTek",cpu:240000,gpu:230000,antutu:480000,process:"4nm"},
+{rank:42,name:"Dimensity 7050",company:"MediaTek",cpu:230000,gpu:220000,antutu:460000,process:"6nm"},
+{rank:43,name:"Snapdragon 695",company:"Qualcomm",cpu:220000,gpu:210000,antutu:440000,process:"6nm"},
+{rank:44,name:"Dimensity 920",company:"MediaTek",cpu:210000,gpu:200000,antutu:420000,process:"6nm"},
+{rank:45,name:"Dimensity 900",company:"MediaTek",cpu:200000,gpu:190000,antutu:400000,process:"6nm"},
+
+{rank:46,name:"Helio G99",company:"MediaTek",cpu:190000,gpu:180000,antutu:380000,process:"6nm"},
+{rank:47,name:"Helio G96",company:"MediaTek",cpu:180000,gpu:170000,antutu:360000,process:"12nm"},
+{rank:48,name:"Helio G95",company:"MediaTek",cpu:170000,gpu:160000,antutu:340000,process:"12nm"},
+{rank:49,name:"Helio G90T",company:"MediaTek",cpu:160000,gpu:150000,antutu:320000,process:"12nm"},
+{rank:50,name:"Helio G88",company:"MediaTek",cpu:150000,gpu:140000,antutu:300000,process:"12nm"},
+
+{rank:51,name:"Helio G85",company:"MediaTek",cpu:145000,gpu:135000,antutu:290000,process:"12nm"},
+{rank:52,name:"Helio G80",company:"MediaTek",cpu:140000,gpu:130000,antutu:280000,process:"12nm"},
+{rank:53,name:"Helio G70",company:"MediaTek",cpu:135000,gpu:125000,antutu:270000,process:"12nm"},
+{rank:54,name:"Dimensity 810",company:"MediaTek",cpu:130000,gpu:120000,antutu:260000,process:"6nm"},
+{rank:55,name:"Dimensity 700",company:"MediaTek",cpu:125000,gpu:115000,antutu:250000,process:"7nm"},
+{rank:56,name:"Snapdragon 690",company:"Qualcomm",cpu:120000,gpu:110000,antutu:240000,process:"8nm"},
+{rank:57,name:"Snapdragon 680",company:"Qualcomm",cpu:115000,gpu:105000,antutu:230000,process:"6nm"},
+{rank:58,name:"Snapdragon 675",company:"Qualcomm",cpu:110000,gpu:100000,antutu:220000,process:"11nm"},
+{rank:59,name:"Snapdragon 670",company:"Qualcomm",cpu:105000,gpu:95000,antutu:210000,process:"10nm"},
+{rank:60,name:"Snapdragon 665",company:"Qualcomm",cpu:100000,gpu:90000,antutu:200000,process:"11nm"},
+
+{rank:61,name:"Snapdragon 662",company:"Qualcomm",cpu:95000,gpu:85000,antutu:190000,process:"11nm"},
+{rank:62,name:"Snapdragon 660",company:"Qualcomm",cpu:90000,gpu:80000,antutu:180000,process:"14nm"},
+{rank:63,name:"Snapdragon 650",company:"Qualcomm",cpu:85000,gpu:75000,antutu:170000,process:"28nm"},
+{rank:64,name:"Snapdragon 636",company:"Qualcomm",cpu:80000,gpu:70000,antutu:160000,process:"14nm"},
+{rank:65,name:"Snapdragon 632",company:"Qualcomm",cpu:75000,gpu:65000,antutu:150000,process:"14nm"},
+{rank:66,name:"Snapdragon 630",company:"Qualcomm",cpu:70000,gpu:60000,antutu:140000,process:"14nm"},
+{rank:67,name:"Snapdragon 625",company:"Qualcomm",cpu:65000,gpu:55000,antutu:130000,process:"14nm"},
+{rank:68,name:"Snapdragon 620",company:"Qualcomm",cpu:60000,gpu:50000,antutu:120000,process:"28nm"},
+{rank:69,name:"Snapdragon 617",company:"Qualcomm",cpu:55000,gpu:45000,antutu:110000,process:"28nm"},
+{rank:70,name:"Snapdragon 615",company:"Qualcomm",cpu:50000,gpu:40000,antutu:100000,process:"28nm"},
+
+{rank:71,name:"Snapdragon 480",company:"Qualcomm",cpu:48000,gpu:38000,antutu:95000,process:"8nm"},
+{rank:72,name:"Snapdragon 460",company:"Qualcomm",cpu:46000,gpu:36000,antutu:90000,process:"11nm"},
+{rank:73,name:"Snapdragon 450",company:"Qualcomm",cpu:44000,gpu:34000,antutu:85000,process:"14nm"},
+{rank:74,name:"Snapdragon 439",company:"Qualcomm",cpu:42000,gpu:32000,antutu:80000,process:"12nm"},
+{rank:75,name:"Snapdragon 430",company:"Qualcomm",cpu:40000,gpu:30000,antutu:75000,process:"28nm"},
+{rank:76,name:"Snapdragon 425",company:"Qualcomm",cpu:38000,gpu:28000,antutu:70000,process:"28nm"},
+{rank:77,name:"Snapdragon 415",company:"Qualcomm",cpu:36000,gpu:26000,antutu:65000,process:"28nm"},
+{rank:78,name:"Snapdragon 410",company:"Qualcomm",cpu:34000,gpu:24000,antutu:60000,process:"28nm"},
+{rank:79,name:"Snapdragon 400",company:"Qualcomm",cpu:32000,gpu:22000,antutu:55000,process:"28nm"},
+{rank:80,name:"Snapdragon 212",company:"Qualcomm",cpu:30000,gpu:20000,antutu:50000,process:"28nm"},
+
+{rank:81,name:"Exynos 1380",company:"Samsung",cpu:28000,gpu:18000,antutu:48000,process:"5nm"},
+{rank:82,name:"Exynos 1330",company:"Samsung",cpu:26000,gpu:17000,antutu:46000,process:"5nm"},
+{rank:83,name:"Exynos 1280",company:"Samsung",cpu:24000,gpu:16000,antutu:44000,process:"5nm"},
+{rank:84,name:"Exynos 850",company:"Samsung",cpu:22000,gpu:15000,antutu:42000,process:"8nm"},
+{rank:85,name:"Exynos 7904",company:"Samsung",cpu:20000,gpu:14000,antutu:40000,process:"14nm"},
+{rank:86,name:"Kirin 820",company:"Huawei",cpu:18000,gpu:13000,antutu:38000,process:"7nm"},
+{rank:87,name:"Kirin 810",company:"Huawei",cpu:16000,gpu:12000,antutu:36000,process:"7nm"},
+{rank:88,name:"Kirin 710A",company:"Huawei",cpu:14000,gpu:11000,antutu:34000,process:"14nm"},
+{rank:89,name:"Kirin 659",company:"Huawei",cpu:12000,gpu:10000,antutu:32000,process:"16nm"},
+{rank:90,name:"Kirin 650",company:"Huawei",cpu:10000,gpu:9000,antutu:30000,process:"16nm"},
+
+{rank:91,name:"Apple A13 Bionic",company:"Apple",cpu:9000,gpu:8000,antutu:28000,process:"7nm"},
+{rank:92,name:"Apple A12 Bionic",company:"Apple",cpu:8000,gpu:7000,antutu:26000,process:"7nm"},
+{rank:93,name:"Apple A11 Bionic",company:"Apple",cpu:7000,gpu:6000,antutu:24000,process:"10nm"},
+{rank:94,name:"Apple A10 Fusion",company:"Apple",cpu:6000,gpu:5000,antutu:22000,process:"16nm"},
+{rank:95,name:"Snapdragon 821",company:"Qualcomm",cpu:5000,gpu:4000,antutu:20000,process:"14nm"},
+{rank:96,name:"Snapdragon 820",company:"Qualcomm",cpu:4000,gpu:3000,antutu:18000,process:"14nm"},
+{rank:97,name:"Snapdragon 810",company:"Qualcomm",cpu:3000,gpu:2500,antutu:16000,process:"20nm"},
+{rank:98,name:"Snapdragon 808",company:"Qualcomm",cpu:2500,gpu:2000,antutu:14000,process:"20nm"},
+{rank:99,name:"Snapdragon 805",company:"Qualcomm",cpu:2000,gpu:1500,antutu:12000,process:"28nm"},
+{rank:100,name:"Snapdragon 801",company:"Qualcomm",cpu:1500,gpu:1000,antutu:10000,process:"28nm"}
+
+];
+
+const table = document.getElementById("cpuTable");
+
+function loadTable(data){
+
+table.innerHTML="";
+
+data.forEach(cpu=>{
+
+table.innerHTML += `
+<tr>
+<td>${cpu.rank}</td>
+<td>${cpu.name}</td>
+<td>${cpu.company}</td>
+<td>${cpu.cpu}</td>
+<td>${cpu.gpu}</td>
+<td>${cpu.antutu}</td>
+<td>${cpu.process}</td>
+</tr>
+`;
+
+});
+
+}
+
+loadTable(processors);
+
+document.getElementById("search").addEventListener("keyup", function(){
+
+let value = this.value.toLowerCase();
+
+let filtered = processors.filter(p =>
+p.name.toLowerCase().includes(value)
+);
+
+loadTable(filtered);
+
+});
+
+</script>
+
+</body>
+</html>

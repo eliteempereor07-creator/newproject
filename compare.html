@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Processor Comparison</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+margin:0;
+}
+
+header{
+text-align:center;
+padding:20px;
+background:#1e293b;
+}
+
+.container{
+width:90%;
+max-width:1100px;
+margin:auto;
+text-align:center;
+}
+
+.comparison-box{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:20px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+width:350px;
+}
+
+.stat{
+margin:15px 0;
+text-align:left;
+}
+
+.stat-title{
+font-weight:bold;
+}
+
+.stat-desc{
+font-size:12px;
+opacity:.7;
+margin-bottom:4px;
+}
+
+.score-bar{
+background:#334155;
+height:22px;
+border-radius:6px;
+overflow:hidden;
+}
+
+.score-fill{
+background:#22c55e;
+height:100%;
+text-align:right;
+padding-right:6px;
+font-size:12px;
+}
+
+.vs{
+font-size:30px;
+font-weight:bold;
+}
+
+#winner{
+margin-top:25px;
+font-size:20px;
+font-weight:bold;
+color:#22c55e;
+}
+
+.key-differences{
+margin-top:30px;
+text-align:left;
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Processor Comparison</h1>
+</header>
+
+<div class="container">
+
+<h2 id="title">Processor A vs Processor B</h2>
+
+<div class="comparison-box">
+
+<div class="card">
+<h3 id="name1">Processor 1</h3>
+
+<div class="stat">
+<div class="stat-title">CPU Performance</div>
+<div class="stat-desc">Single and multi-core tests</div>
+<div class="score-bar"><div class="score-fill" id="cpu1">0</div></div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Gaming Performance</div>
+<div class="stat-desc">GPU gaming benchmarks</div>
+<div class="score-bar"><div class="score-fill" id="gpu1">0</div></div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Battery Life</div>
+<div class="stat-desc">Power efficiency</div>
+<div class="score-bar"><div class="score-fill" id="battery1">0</div></div>
+</div>
+
+<div class="stat">
+<div class="stat-title">NanoReview Score</div>
+<div class="score-bar"><div class="score-fill" id="nano1">0</div></div>
+</div>
+
+</div>
+
+<div class="vs">VS</div>
+
+<div class="card">
+
+<h3 id="name2">Processor 2</h3>
+
+<div class="stat">
+<div class="stat-title">CPU Performance</div>
+<div class="score-bar"><div class="score-fill" id="cpu2">0</div></div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Gaming Performance</div>
+<div class="score-bar"><div class="score-fill" id="gpu2">0</div></div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Battery Life</div>
+<div class="score-bar"><div class="score-fill" id="battery2">0</div></div>
+</div>
+
+<div class="stat">
+<div class="stat-title">NanoReview Score</div>
+<div class="score-bar"><div class="score-fill" id="nano2">0</div></div>
+</div>
+
+</div>
+
+</div>
+
+<div id="winner"></div>
+
+<div class="key-differences">
+<h2>Key Differences</h2>
+<ul id="prosList"></ul>
+</div>
+
+</div>
+
+<script>
+
+// Processor database
+const processors = {
+
+"Snapdragon 8 Gen 4 (Elite)":{cpu:99,gpu:99,battery:93,nanoScore:99,pros:["Next gen flagship","Extreme gaming power","AI optimized"]},
+"Snapdragon 8 Gen 3":{cpu:97,gpu:98,battery:91,nanoScore:97,pros:["Flagship performance","Excellent gaming","Efficient design"]},
+"Snapdragon 8 Gen 2":{cpu:95,gpu:96,battery:90,nanoScore:95,pros:["Great gaming","Stable thermals"]},
+"Snapdragon 8 Gen 1":{cpu:92,gpu:93,battery:85,nanoScore:91,pros:["Powerful GPU","Good flagship performance"]},
+"Snapdragon 888 Plus":{cpu:91,gpu:92,battery:84,nanoScore:90,pros:["Strong gaming","High clock speeds"]},
+"Snapdragon 888":{cpu:90,gpu:91,battery:83,nanoScore:89,pros:["Flagship CPU","Good camera ISP"]},
+"Snapdragon 870":{cpu:89,gpu:88,battery:88,nanoScore:88,pros:["Very stable","Good thermals"]},
+"Snapdragon 865 Plus":{cpu:88,gpu:87,battery:86,nanoScore:87,pros:["Great gaming","Reliable performance"]},
+"Snapdragon 865":{cpu:87,gpu:86,battery:87,nanoScore:86,pros:["Efficient flagship","Good modem"]},
+"Snapdragon 855 Plus":{cpu:84,gpu:85,battery:84,nanoScore:84,pros:["Strong gaming","Good optimization"]},
+"Snapdragon 855":{cpu:83,gpu:84,battery:83,nanoScore:83,pros:["Balanced flagship chip"]},
+"Snapdragon 845":{cpu:80,gpu:81,battery:82,nanoScore:80,pros:["Smooth performance"]},
+"Snapdragon 835":{cpu:76,gpu:75,battery:80,nanoScore:75,pros:["Efficient older flagship"]},
+"Snapdragon 821":{cpu:72,gpu:70,battery:75,nanoScore:70,pros:["Improved 820"]},
+"Snapdragon 820":{cpu:70,gpu:68,battery:74,nanoScore:68,pros:["First Kryo CPU"]},
+
+/* Snapdragon Midrange */
+
+"Snapdragon 7+ Gen 3":{cpu:92,gpu:92,battery:91,nanoScore:92,pros:["Near flagship performance","Great gaming"]},
+"Snapdragon 7 Gen 3":{cpu:89,gpu:88,battery:90,nanoScore:88,pros:["Efficient midrange","Good AI"]},
+"Snapdragon 7 Gen 1":{cpu:86,gpu:85,battery:87,nanoScore:85,pros:["Good camera support"]},
+"Snapdragon 780G":{cpu:87,gpu:86,battery:88,nanoScore:86,pros:["Flagship like efficiency"]},
+"Snapdragon 778G":{cpu:85,gpu:84,battery:88,nanoScore:84,pros:["Great balance"]},
+"Snapdragon 768G":{cpu:82,gpu:81,battery:86,nanoScore:81,pros:["Good gaming midrange"]},
+"Snapdragon 765G":{cpu:80,gpu:79,battery:87,nanoScore:79,pros:["Integrated 5G"]},
+"Snapdragon 750G":{cpu:79,gpu:78,battery:86,nanoScore:78,pros:["Affordable 5G"]},
+"Snapdragon 732G":{cpu:78,gpu:77,battery:85,nanoScore:77,pros:["Stable gaming"]},
+"Snapdragon 730G":{cpu:77,gpu:76,battery:85,nanoScore:76,pros:["Good GPU"]},
+"Snapdragon 720G":{cpu:75,gpu:74,battery:86,nanoScore:74,pros:["Efficient gaming chip"]},
+"Snapdragon 710":{cpu:73,gpu:72,battery:84,nanoScore:72,pros:["First AI midrange"]},
+"Snapdragon 695":{cpu:72,gpu:70,battery:88,nanoScore:70,pros:["Very efficient"]},
+"Snapdragon 690":{cpu:71,gpu:69,battery:87,nanoScore:69,pros:["Budget 5G"]},
+"Snapdragon 680":{cpu:68,gpu:65,battery:89,nanoScore:66,pros:["Very power efficient"]},
+
+/* Snapdragon Budget */
+
+"Snapdragon 675":{cpu:70,gpu:68,battery:83,nanoScore:68,pros:["Good CPU cores"]},
+"Snapdragon 670":{cpu:69,gpu:67,battery:83,nanoScore:67,pros:["Efficient design"]},
+"Snapdragon 665":{cpu:66,gpu:65,battery:85,nanoScore:65,pros:["Long battery life"]},
+"Snapdragon 660":{cpu:65,gpu:64,battery:83,nanoScore:64,pros:["Popular budget chip"]},
+"Snapdragon 650":{cpu:63,gpu:62,battery:80,nanoScore:62,pros:["Good CPU performance"]},
+"Snapdragon 636":{cpu:61,gpu:60,battery:82,nanoScore:60,pros:["Stable performance"]},
+"Snapdragon 632":{cpu:59,gpu:58,battery:81,nanoScore:58,pros:["Budget efficiency"]},
+"Snapdragon 630":{cpu:57,gpu:56,battery:80,nanoScore:56,pros:["Power efficient"]},
+"Snapdragon 625":{cpu:55,gpu:54,battery:85,nanoScore:54,pros:["Legendary battery life"]},
+"Snapdragon 617":{cpu:52,gpu:50,battery:80,nanoScore:50,pros:["Entry level SoC"]},
+
+/* Apple */
+
+"Apple A18 Pro":{cpu:100,gpu:100,battery:95,nanoScore:100,pros:["Best mobile CPU","Console level GPU"]},
+"Apple A17 Pro":{cpu:98,gpu:98,battery:93,nanoScore:98,pros:["Console level gaming","Industry leading CPU"]},
+"Apple A16 Bionic":{cpu:96,gpu:95,battery:92,nanoScore:96,pros:["Excellent efficiency"]},
+"Apple A15 Bionic":{cpu:94,gpu:93,battery:92,nanoScore:94,pros:["Very powerful GPU"]},
+"Apple A14 Bionic":{cpu:92,gpu:90,battery:91,nanoScore:91,pros:["First 5nm chip"]},
+"Apple A13 Bionic":{cpu:90,gpu:88,battery:90,nanoScore:89,pros:["Excellent efficiency"]},
+"Apple A12 Bionic":{cpu:88,gpu:86,battery:88,nanoScore:87,pros:["Strong neural engine"]},
+"Apple A11 Bionic":{cpu:85,gpu:83,battery:86,nanoScore:84,pros:["First neural engine"]},
+"Apple A10 Fusion":{cpu:80,gpu:78,battery:84,nanoScore:78,pros:["Good efficiency"]},
+"Apple A9":{cpu:75,gpu:73,battery:82,nanoScore:73,pros:["Solid performance"]},
+"Apple A8":{cpu:70,gpu:68,battery:80,nanoScore:68,pros:["Reliable chip"]},
+
+/* MediaTek Dimensity */
+
+"Dimensity 9400":{cpu:99,gpu:99,battery:94,nanoScore:99,pros:["Extreme flagship power"]},
+"Dimensity 9300":{cpu:96,gpu:96,battery:91,nanoScore:96,pros:["Powerful CPU cluster"]},
+"Dimensity 9200+":{cpu:95,gpu:95,battery:90,nanoScore:95,pros:["Strong GPU"]},
+"Dimensity 9200":{cpu:94,gpu:94,battery:90,nanoScore:94,pros:["Great gaming"]},
+"Dimensity 9000+":{cpu:93,gpu:93,battery:90,nanoScore:93,pros:["Flagship class"]},
+"Dimensity 9000":{cpu:92,gpu:92,battery:90,nanoScore:92,pros:["Efficient flagship"]},
+"Dimensity 8200":{cpu:90,gpu:90,battery:91,nanoScore:90,pros:["Excellent midrange gaming"]},
+"Dimensity 8100":{cpu:89,gpu:89,battery:92,nanoScore:89,pros:["Great efficiency"]},
+"Dimensity 8000":{cpu:88,gpu:88,battery:91,nanoScore:88,pros:["Good performance"]},
+"Dimensity 7050":{cpu:84,gpu:82,battery:90,nanoScore:83,pros:["Efficient midrange"]},
+"Dimensity 7020":{cpu:82,gpu:80,battery:89,nanoScore:81,pros:["Good battery life"]},
+"Dimensity 6080":{cpu:78,gpu:75,battery:88,nanoScore:76,pros:["Budget 5G"]},
+"Dimensity 6020":{cpu:76,gpu:74,battery:88,nanoScore:75,pros:["Affordable 5G"]},
+"Dimensity 1300":{cpu:88,gpu:87,battery:89,nanoScore:87,pros:["Strong gaming"]},
+"Dimensity 1200":{cpu:87,gpu:86,battery:88,nanoScore:86,pros:["Flagship killer"]},
+"Dimensity 1100":{cpu:86,gpu:85,battery:88,nanoScore:85,pros:["Good performance"]},
+"Dimensity 1000+":{cpu:84,gpu:84,battery:86,nanoScore:84,pros:["Early flagship chip"]},
+
+/* Helio */
+
+"Helio G99":{cpu:80,gpu:78,battery:90,nanoScore:79,pros:["Very efficient gaming chip"]},
+"Helio G96":{cpu:78,gpu:76,battery:86,nanoScore:76,pros:["Budget gaming"]},
+"Helio G95":{cpu:77,gpu:75,battery:85,nanoScore:75,pros:["Good GPU"]},
+"Helio G90T":{cpu:76,gpu:74,battery:84,nanoScore:74,pros:["Popular gaming chip"]},
+"Helio G88":{cpu:74,gpu:72,battery:88,nanoScore:72,pros:["Efficient"]},
+"Helio G85":{cpu:73,gpu:71,battery:87,nanoScore:71,pros:["Stable gaming"]},
+"Helio G80":{cpu:71,gpu:69,battery:87,nanoScore:69,pros:["Good battery life"]},
+"Helio G70":{cpu:69,gpu:67,battery:86,nanoScore:67,pros:["Entry gaming"]},
+
+/* Exynos */
+
+"Exynos 2500":{cpu:97,gpu:97,battery:92,nanoScore:97,pros:["Next gen Samsung flagship"]},
+"Exynos 2400":{cpu:95,gpu:95,battery:90,nanoScore:95,pros:["AMD GPU"]},
+"Exynos 2200":{cpu:92,gpu:91,battery:87,nanoScore:91,pros:["RDNA2 GPU"]},
+"Exynos 2100":{cpu:90,gpu:88,battery:85,nanoScore:88,pros:["Improved thermals"]},
+"Exynos 1380":{cpu:86,gpu:84,battery:89,nanoScore:85,pros:["Great midrange chip"]},
+"Exynos 1330":{cpu:82,gpu:80,battery:88,nanoScore:81,pros:["Efficient 5G"]},
+"Exynos 1280":{cpu:83,gpu:81,battery:88,nanoScore:82,pros:["Balanced chip"]},
+"Exynos 1080":{cpu:88,gpu:87,battery:88,nanoScore:87,pros:["Strong midrange"]},
+"Exynos 990":{cpu:85,gpu:83,battery:82,nanoScore:83,pros:["Flagship chip"]},
+"Exynos 9825":{cpu:83,gpu:81,battery:83,nanoScore:81,pros:["Good flagship"]},
+"Exynos 9810":{cpu:80,gpu:78,battery:82,nanoScore:78,pros:["Strong CPU"]},
+"Exynos 8895":{cpu:76,gpu:74,battery:80,nanoScore:74,pros:["Efficient"]},
+"Exynos 8890":{cpu:73,gpu:71,battery:78,nanoScore:71,pros:["Good performance"]},
+"Exynos 7420":{cpu:70,gpu:68,battery:77,nanoScore:68,pros:["First 14nm chip"]},
+"Exynos 5433":{cpu:65,gpu:63,battery:75,nanoScore:63,pros:["Early flagship"]},
+
+/* Google Tensor */
+
+"Tensor G4":{cpu:94,gpu:92,battery:90,nanoScore:92,pros:["AI focused flagship"]},
+"Tensor G3":{cpu:90,gpu:89,battery:89,nanoScore:90,pros:["Great AI processing"]},
+"Tensor G2":{cpu:88,gpu:87,battery:88,nanoScore:88,pros:["Good camera AI"]},
+"Tensor (Gen 1)":{cpu:86,gpu:85,battery:86,nanoScore:86,pros:["First Google AI chip"]}
+
+};
+
+
+// Get processors from URL
+const params = new URLSearchParams(window.location.search);
+const p1 = params.get("proc1");
+const p2 = params.get("proc2");
+
+document.getElementById("title").innerText=`${p1} vs ${p2}`;
+document.getElementById("name1").innerText=p1;
+document.getElementById("name2").innerText=p2;
+
+
+// Update score bar
+function updateBar(id,value){
+const bar=document.getElementById(id);
+bar.style.width=value+"%";
+bar.innerText=value;
+}
+
+
+// Processor 1
+if(processors[p1]){
+updateBar("cpu1",processors[p1].cpu);
+updateBar("gpu1",processors[p1].gpu);
+updateBar("battery1",processors[p1].battery);
+updateBar("nano1",processors[p1].nanoScore);
+}
+
+// Processor 2
+if(processors[p2]){
+updateBar("cpu2",processors[p2].cpu);
+updateBar("gpu2",processors[p2].gpu);
+updateBar("battery2",processors[p2].battery);
+updateBar("nano2",processors[p2].nanoScore);
+}
+
+
+// Winner
+let winner="";
+if(processors[p1] && processors[p2]){
+
+if(processors[p1].nanoScore>processors[p2].nanoScore){
+winner="🏆 "+p1+" is more powerful!";
+}
+else if(processors[p1].nanoScore<processors[p2].nanoScore){
+winner="🏆 "+p2+" is more powerful!";
+}
+else{
+winner="⚖️ Both processors have equal performance";
+}
+
+}else{
+winner="Processor data not found.";
+}
+
+document.getElementById("winner").innerText=winner;
+
+
+// Show pros
+const prosList=document.getElementById("prosList");
+prosList.innerHTML="";
+
+if(processors[p1]){
+processors[p1].pros.forEach(p=>{
+let li=document.createElement("li");
+li.textContent=p;
+prosList.appendChild(li);
+});
+}
+
+</script>
+
+</body>
+</html>
