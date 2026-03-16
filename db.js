@@ -6,6 +6,7 @@
 const processorDB = [
 
   // ── APPLE ──────────────────────────────────────────────────
+
   { name:"Apple A19 Pro",      company:"Apple",    cpu:99,  gpu:99,  battery:96, nanoScore:100, antutu:1890000, process:"3nm",
     pros:["World's fastest mobile chip","Console-level GPU","Industry-leading neural engine"] },
 
@@ -43,7 +44,8 @@ const processorDB = [
     pros:["Reliable chip","Efficient design"] },
 
   // ── QUALCOMM SNAPDRAGON FLAGSHIP ───────────────────────────
-  { name:"Snapdragon 8 Elite", company:"Qualcomm", cpu:99,  gpu:99,  battery:93, nanoScore:99,  antutu:1810000, process:"3nm",
+
+  { name:"Snapdragon 8 Elite", company:"Qualcomm", cpu:99,  gpu:99,  battery:94, nanoScore:99,  antutu:1810000, process:"3nm",
     pros:["Next-gen flagship","Extreme gaming power","AI optimized"] },
 
   { name:"Snapdragon 8 Gen 3", company:"Qualcomm", cpu:97,  gpu:98,  battery:91, nanoScore:97,  antutu:1600000, process:"4nm",
@@ -104,6 +106,7 @@ const processorDB = [
     pros:["Very popular flagship chip"] },
 
   // ── QUALCOMM SNAPDRAGON MIDRANGE ───────────────────────────
+
   { name:"Snapdragon 8s Gen 3",company:"Qualcomm", cpu:93,  gpu:92,  battery:91, nanoScore:92,  antutu:1220000, process:"4nm",
     pros:["Near-flagship performance","Great gaming"] },
 
@@ -150,6 +153,7 @@ const processorDB = [
     pros:["Budget 5G"] },
 
   // ── QUALCOMM SNAPDRAGON BUDGET ─────────────────────────────
+
   { name:"Snapdragon 680",     company:"Qualcomm", cpu:68,  gpu:65,  battery:89, nanoScore:66,  antutu:230000,  process:"6nm",
     pros:["Very power efficient"] },
 
@@ -223,6 +227,7 @@ const processorDB = [
     pros:["Ultra-low power"] },
 
   // ── MEDIATEK DIMENSITY FLAGSHIP ────────────────────────────
+
   { name:"Dimensity 9500",     company:"MediaTek", cpu:99,  gpu:98,  battery:94, nanoScore:99,  antutu:1780000, process:"3nm",
     pros:["Extreme flagship power","Top efficiency"] },
 
@@ -251,6 +256,7 @@ const processorDB = [
     pros:["Efficient flagship"] },
 
   // ── MEDIATEK DIMENSITY MIDRANGE ────────────────────────────
+
   { name:"Dimensity 8300 Ultra",company:"MediaTek",cpu:89, gpu:88,  battery:91, nanoScore:88,  antutu:540000,  process:"4nm",
     pros:["Excellent midrange gaming"] },
 
@@ -297,6 +303,7 @@ const processorDB = [
     pros:["Budget 5G choice"] },
 
   // ── MEDIATEK DIMENSITY BUDGET ──────────────────────────────
+
   { name:"Dimensity 6080",     company:"MediaTek", cpu:74,  gpu:72,  battery:88, nanoScore:72,  antutu:300000,  process:"6nm",
     pros:["Budget 5G"] },
 
@@ -304,6 +311,7 @@ const processorDB = [
     pros:["Affordable 5G"] },
 
   // ── MEDIATEK HELIO ─────────────────────────────────────────
+
   { name:"Helio G99",          company:"MediaTek", cpu:78,  gpu:76,  battery:90, nanoScore:77,  antutu:380000,  process:"6nm",
     pros:["Very efficient gaming chip"] },
 
@@ -329,6 +337,7 @@ const processorDB = [
     pros:["Entry gaming"] },
 
   // ── SAMSUNG EXYNOS ─────────────────────────────────────────
+
   { name:"Exynos 2500",        company:"Samsung",  cpu:97,  gpu:97,  battery:92, nanoScore:97,  antutu:1600000, process:"3nm",
     pros:["Next-gen Samsung flagship","Advanced GPU"] },
 
@@ -381,6 +390,7 @@ const processorDB = [
     pros:["Early flagship"] },
 
   // ── GOOGLE TENSOR ──────────────────────────────────────────
+
   { name:"Tensor G4",          company:"Google",   cpu:92,  gpu:90,  battery:90, nanoScore:90,  antutu:850000,  process:"4nm",
     pros:["AI focused flagship","Best Google AI"] },
 
@@ -394,6 +404,7 @@ const processorDB = [
     pros:["First Google AI chip"] },
 
   // ── HUAWEI KIRIN ───────────────────────────────────────────
+
   { name:"Kirin 9000",         company:"Huawei",   cpu:91,  gpu:89,  battery:90, nanoScore:90,  antutu:600000,  process:"5nm",
     pros:["Integrated 5G modem","Great AI","Efficient 5nm"] },
 
@@ -415,10 +426,12 @@ const processorDB = [
 ];
 
 // ── Helper: build lookup map by name ───────────────────────
+
 const processorMap = {};
 processorDB.forEach(p => { processorMap[p.name] = p; });
 
 // ── Helper: sorted rankings (by nanoScore desc, then antutu) ─
+
 const rankedProcessors = [...processorDB].sort((a, b) => {
   if (b.nanoScore !== a.nanoScore) return b.nanoScore - a.nanoScore;
   return b.antutu - a.antutu;
